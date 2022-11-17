@@ -6,6 +6,7 @@ public class DestructableBehaviour : MonoBehaviour
 {
     public int _lifePoints;
     public float attackRange;
+    public float baseAttackRange;
     public float _attackSpeed;
     public int _attackDamage;
 
@@ -35,7 +36,7 @@ public class DestructableBehaviour : MonoBehaviour
             {
                 if (distDiff <= attackRange && !_isAttacking)
                 {
-                attackRange = attackRange;
+                    attackRange = baseAttackRange;
                     _isAttacking = true;
                     transform.LookAt(selectedTarget.transform.position);
                     currentCM._lifePoints -= _attackDamage;

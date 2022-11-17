@@ -9,19 +9,31 @@ public class CharacterSpawn : MonoBehaviour
     public GameObject spawnPoint;
     public bool isRandomized;
 
+    //Drag&Drop
+    private GameObject selectedObject;
+
     [SerializeField] private Transform spawnTransform;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
     // Update is called once per frame
     void Update()
     {
-        
+      if(Input.GetMouseButtonDown(0))
+        {
+
+        }
+
+      if(selectedObject != null)
+        {
+
+        }
     }
 
+    /*private RaycastHit CastRay()
+    {
+        Vector3 screenMousePosFar = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.farClipPlane);
+        Vector3 screenMousePosNear = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane);
+    }*/
     public void SummonTroops()
     {
         int index = isRandomized ? Random.Range(0, SpawnPrefab.Count) : 0;
