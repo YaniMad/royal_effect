@@ -26,7 +26,7 @@ public class Deck
         set { nextCard = value; }
 	}
 
-    private void Start()
+    public void Start()
     {
         nextCard = cards[0];
     }
