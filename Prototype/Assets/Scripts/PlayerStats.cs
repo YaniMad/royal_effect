@@ -11,9 +11,9 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private List<Image> resources;
     [SerializeField]
-    private TextMeshPro textCurrentResources;
+    private TextMeshProUGUI textCurrentResources;
     [SerializeField]
-    private TextMeshPro textMaxResources;
+    private TextMeshProUGUI textMaxResources;
     [SerializeField]
     private float currentResources;
      
@@ -25,11 +25,11 @@ public class PlayerStats : MonoBehaviour
     {
         get { return resources; }
     }
-    public TextMeshPro TextCurrentResources
+    public TextMeshProUGUI TextCurrentResources
     {
         get { return textCurrentResources; }
     }
-    public TextMeshPro TextMaxResources
+    public TextMeshProUGUI TextMaxResources
     {
           get { return textMaxResources; }
     }
@@ -53,7 +53,25 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
-        
+        if(GetCurrentResources < GameConstants.RESOURCE_MAX + 1)
+        {
+            resources[GetCurrentResources].fillAmount = currentResources - GetCurrentResources;
+            currentResources += Time.deltaTime * GameConstants.RESOURCE_SPEED;
+        }
+
+        UpdateText();
+        UpdateDeck();
+    }
+
+    private void UpdateText()
+    {
+        textCurrentResources.text = GetCurrentResources.ToString();
+        textMaxResources.text = (GameConstants.RESOURCE_MAX + 1).ToString();
+    }
+
+    private void UpdateDeck()
+    {
+
     }
 }
 
