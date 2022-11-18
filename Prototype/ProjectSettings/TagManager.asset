@@ -7,6 +7,7 @@ TagManager:
   - Tower
   - Ennemy
   - EnnemyTower
+  - Ally
   layers:
   - Default
   - TransparentFX

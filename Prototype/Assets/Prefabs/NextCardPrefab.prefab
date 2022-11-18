@@ -359,6 +359,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7425908027540298711}
   - component: {fileID: 723442463972790509}
+  - component: {fileID: 3472601197565991600}
   m_Layer: 0
   m_Name: NextCardPrefab
   m_TagString: Untagged
@@ -395,6 +396,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4113593601975582017}
   m_CullTransparentMesh: 1
+--- !u!114 &3472601197565991600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4113593601975582017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ebe4a0972dabfd49a01a135ff0e728d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardInfo:
+    index: 0
+    cardName: 
+    icon: {fileID: 0}
+    cost: 0
+    prefab: {fileID: 0}
+  icon: {fileID: 2323671064431323540}
+  cardName: {fileID: 4283947788287906429}
+  cost: {fileID: 7947727443575938972}
+  playerInfo: {fileID: 0}
 --- !u!1 &4415427786396738077
 GameObject:
   m_ObjectHideFlags: 0

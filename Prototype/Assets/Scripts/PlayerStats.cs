@@ -16,6 +16,16 @@ public class PlayerStats : MonoBehaviour
     private TextMeshProUGUI textMaxResources;
     [SerializeField]
     private float currentResources;
+    [SerializeField]
+    private GameObject cardPrefab;
+    [SerializeField]
+    private Transform handParent;
+    [SerializeField]
+    private Card nextCard;
+    [SerializeField]
+    private bool onDragging;
+    [SerializeField]
+    private Transform unitTransform;
      
     public Deck PlayersDeck
     {
@@ -45,6 +55,16 @@ public class PlayerStats : MonoBehaviour
         get { return currentResources; }  
         set { currentResources = value; }  
     }
+    public bool OnDragging
+    {
+        get { return onDragging; }
+        set { onDragging = value; }
+    }
+    public Transform UnitTransform
+    {
+        get { return unitTransform; }
+        set { unitTransform = value; }
+    }
 
     private void Start()
     {
@@ -71,7 +91,30 @@ public class PlayerStats : MonoBehaviour
 
     private void UpdateDeck()
     {
+        if(playersDeck.Hand.Count < GameConstants.MAX_HAND_SIZE)
+        {
+            CardStats cs = playersDeck.DrawCard();
+            GameObject go = Instantiate(cardPrefab, handParent);
+            Card c = go.GetComponent<Card>();
+            c.PlayerInfo = this;
+            c.CardInfo = cs;
+        }
 
+        nextCard.CardInfo = playersDeck.NextCard;
+        nextCard.PlayerInfo = this;
+    }
+
+    public void RemoveResources(int cost)
+    {
+        currentResources -= cost;
+        for (int i = 0; i < resources.Count; i++)
+        {
+            resources[i].fillAmount = 0;
+            if(i <= GetCurrentResources)
+            {
+                resources[i].fillAmount = 1;
+            }
+        }
     }
 }
 

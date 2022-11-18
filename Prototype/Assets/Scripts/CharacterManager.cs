@@ -38,7 +38,6 @@ public class CharacterManager : DestructableBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(selectedTarget);
         if(selectedTarget != null)
         {
             //_distDiff = Vector3.Distance(selectedTarget.transform.position, transform.position);

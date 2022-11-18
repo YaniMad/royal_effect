@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2725728339914335017}
   m_Layer: 6
   m_Name: Moine
-  m_TagString: Untagged
+  m_TagString: Ally
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,7 +130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifePoints: 60
-  attackRange: 0
+  attackRange: 5
+  baseAttackRange: 5
   _attackSpeed: 1.75
   _attackDamage: 25
   selectedTarget: {fileID: 0}
