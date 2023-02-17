@@ -57,8 +57,12 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		{
 			if(canDrag)
 			{
-				playerInfo.OnDragging = true;
-				transform.SetParent(GameFunctions.GetCanvas());
+				if (playerInfo.CheckIfEnoughRessource(cardInfo.Cost))
+                {
+					playerInfo.OnDragging = true;
+					transform.SetParent(GameFunctions.GetCanvas());
+				}
+
 			}
 		}
 	}
@@ -73,12 +77,14 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
 	public void OnEndDrag(PointerEventData eventData)
 	{
-        Debug.Log("END DRAG");
         GameObject go = eventData.pointerCurrentRaycast.gameObject;
-
 		if(go != null)
 		{
 			SpawnUnit();
+		} else
+        {
+			Debug.Log("NOT ENOUGH ELIXIR");
+
 		}
 
 		playerInfo.OnDragging = false;
@@ -88,15 +94,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	{
 		if(playerInfo.GetCurrentResources >= cardInfo.Cost)
 		{
-            Debug.Log("BEGIN SPAWNUNIT");
             playerInfo.PlayersDeck.RemoveHand(cardInfo.Index);
 			playerInfo.RemoveResources(CardInfo.Cost);
 			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Debug.Log(cardInfo.Prefab.name);
             GameFunctions.SpawnUnit(cardInfo.Prefab, playerInfo.UnitTransform, pos);
-
-            Debug.Log("DESTROY");
-
             Destroy(gameObject);
 		}
 	}

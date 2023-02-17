@@ -15,7 +15,6 @@ public class GameFunctions
         GameObject go = GameObject.Instantiate(prefab, parent);
         if (go == null)
         {
-            Debug.Log("Instantiate failed");
             return;
         }
        // go.transform.position = new Vector3(pos.x, 4.6f, pos.z);

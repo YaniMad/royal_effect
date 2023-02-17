@@ -116,5 +116,11 @@ public class PlayerStats : MonoBehaviour
             }
         }
     }
+
+    public bool CheckIfEnoughRessource(int cost)
+    {
+        if (currentResources - cost >= 0) return true;
+        else return false;
+    }
 }
 
