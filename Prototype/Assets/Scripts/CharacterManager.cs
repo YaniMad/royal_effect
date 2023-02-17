@@ -8,40 +8,29 @@ using UnityEngine.AI;
 public class CharacterManager : DestructableBehaviour
 {
     //Stats
+    [SerializeField] private int _manaCost;    
     
-
-    [SerializeField] private int _manaCost;
-
-    public float _distDiff;
-    
-
-    
-
     //Cible
-    private GameObject[] _target;
-    [SerializeField] private string _tagToFollow;
-    private Transform _targetPosition;
-    
+    private List<DestructableBehaviour> _target = new List<DestructableBehaviour>();
 
-    //NavMesh Agent
-    [SerializeField] private string towerTag;
-    private GameObject _towerToDestroy;
-    
-
-    // Start is called before the first frame update
     void Start()
     {
         ReinitTarget();
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(selectedTarget != null)
         {
-            //_distDiff = Vector3.Distance(selectedTarget.transform.position, transform.position);
-            Attack();
+            float distDiff = Vector3.Distance(selectedTarget.transform.parent.transform.position, transform.position);
+            if (!_isAttacking && distDiff <= attackRange)
+            {
+                GetComponentInParent<NavMeshAgent>().destination = transform.position;
+                Attack();
+            } else if (!_isAttacking && distDiff > attackRange)
+            {
+                GetComponentInParent<NavMeshAgent>().destination = selectedTarget.transform.parent.transform.position;
+            }
         }
         else
         {
@@ -49,40 +38,33 @@ public class CharacterManager : DestructableBehaviour
         }
     }
 
-   
-
-
-
     private void ReinitTarget()
     {
         selectedTarget = null;
 
-        _target = GameObject.FindGameObjectsWithTag(_tagToFollow);
-        
+        GetComponent<CharacterAnimation>().animator.SetBool("onRange", false);
+
+        //_target = GameObject.FindGameObjectsWithTag(_tagToFollow);
+        _target = FindObjectsOfType<DestructableBehaviour>().ToListPooled();
 
         float minDistance = 10000;
 
-        foreach(GameObject currentTarget in _target)
+        _target = _target.FindAll(x => x.unitSide != unitSide);
+        foreach(DestructableBehaviour currentTarget in _target)
         {
+            Debug.Log(currentTarget.name);
             float distDiff = Vector3.Distance(currentTarget.transform.position, transform.position);
+            //if (currentTarget.unitSide == unitSide) break;
             if (distDiff <= minDistance)
             {
                 selectedTarget = currentTarget;
                 minDistance = distDiff;
             }
-            
         }
-
-
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-
-        if (selectedTarget != null)
-        {
-            agent.destination = selectedTarget.transform.position;
-        }
-        else if (selectedTarget == null)
-        {
-            agent.destination = _towerToDestroy.transform.position;
-        }
+        //if (selectedTarget == null)
+        //{
+        //    selectedTarget = _towerToDestroy;
+        //    //agent.destination = selectedTarget.transform.position;
+        //}
     }
 }

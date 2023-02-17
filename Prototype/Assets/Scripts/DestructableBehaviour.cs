@@ -4,85 +4,80 @@ using UnityEngine;
 
 public class DestructableBehaviour : MonoBehaviour
 {
+    public enum UnitSide
+    {
+        Ally = 0,
+        Ennemy = 1
+    }
+
+    public UnitSide unitSide;
     public int _lifePoints;
     public float attackRange;
     public float baseAttackRange;
     public float _attackSpeed;
     public int _attackDamage;
 
-    public GameObject selectedTarget;
+    public DestructableBehaviour selectedTarget;
 
-    private bool _isAttacking;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    [HideInInspector] public bool _isAttacking;
     public void Attack()
     {
-        float distDiff = Vector3.Distance(selectedTarget.transform.position, transform.position);
-      
-            CharacterManager currentCM = selectedTarget.GetComponent<CharacterManager>();
-            if(currentCM != null)
-            {
-                if (distDiff <= attackRange && !_isAttacking)
-                {
-                    attackRange = baseAttackRange;
-                    _isAttacking = true;
-                    transform.LookAt(selectedTarget.transform.position);
-                    currentCM._lifePoints -= _attackDamage;
+        CharacterManager currentCM = selectedTarget.GetComponentInChildren<CharacterManager>();
+        if(currentCM != null)
+        {
+            //if (distDiff <= attackRange)
+            //{
+                _isAttacking = true;
+                //attackRange = baseAttackRange;
+                transform.LookAt(selectedTarget.transform.position);
+                currentCM._lifePoints -= _attackDamage;
+                GetComponent<CharacterAnimation>().animator.SetBool("onRange", true);
+                Debug.Log(this.name + "attaque" + currentCM.name);
 
-                    Invoke(nameof(ResetAttack), _attackSpeed);
-
+                //Invoke(nameof(ResetAttack), _attackSpeed);
                 if (currentCM._lifePoints <= 0)
-                    {
-                        Death();
-
-                    }
+                {
+                    Debug.Log("kills enemy");
+                    Death();
+                    GetComponent<CharacterAnimation>().animator.SetBool("onRange", false);
                 }
-                    
-            }
+                StartCoroutine(attackCooldown(GetComponent<CharacterAnimation>().animator.runtimeAnimatorController.animationClips[2].length));
+            //}
+        }
 
             else if(currentCM == null)
             {
             
                 attackRange = 10f;
-                TowerManager currentTM = selectedTarget.GetComponent<TowerManager>();
+                TowerManager currentTM = selectedTarget.GetComponentInChildren<TowerManager>();
 
-                if(distDiff <= attackRange && !_isAttacking)
-                {
+                //if(distDiff <= attackRange && !_isAttacking)
+                //{
                     _isAttacking = true;
                     currentTM._lifePoints -= _attackDamage;
-
-                    Invoke(nameof(ResetAttack), _attackSpeed);
-                if (currentTM._lifePoints <= 0)
-                    {
-                        Death();
+                GetComponent<CharacterAnimation>().animator.SetBool("onRange", true);
+                //Invoke(nameof(ResetAttack), _attackSpeed);
+                    if (currentTM._lifePoints <= 0)
+                        {
+                            Death();
+                        }
                     }
-                }    
-            }
-            
-            
+                    StartCoroutine(attackCooldown(GetComponent<CharacterAnimation>().animator.runtimeAnimatorController.animationClips[2].length));
+        //}
+
+
     }
 
-    private void ResetAttack()
+    private IEnumerator attackCooldown(float _cooldown)
     {
+        yield return new WaitForSeconds(_cooldown); 
         _isAttacking = false;
+        Debug.Log("can attack again");
     }
 
     private void Death()
     {
 
-        Destroy(selectedTarget);
-        // selectedTarget = null;
+        Destroy(selectedTarget.transform.parent.gameObject);
     }
 }
