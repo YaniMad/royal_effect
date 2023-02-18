@@ -42,9 +42,11 @@ public class CharacterManager : DestructableBehaviour
     {
         selectedTarget = null;
 
-        GetComponent<CharacterAnimation>().animator.SetBool("onRange", false);
+        if (GetComponent<CharacterAnimation>() != null) //animate
+        {
+            GetComponent<CharacterAnimation>().animator.SetBool("onRange", false);
+        }
 
-        //_target = GameObject.FindGameObjectsWithTag(_tagToFollow);
         _target = FindObjectsOfType<DestructableBehaviour>().ToListPooled();
 
         float minDistance = 10000;
@@ -52,19 +54,13 @@ public class CharacterManager : DestructableBehaviour
         _target = _target.FindAll(x => x.unitSide != unitSide);
         foreach(DestructableBehaviour currentTarget in _target)
         {
-            Debug.Log(currentTarget.name);
             float distDiff = Vector3.Distance(currentTarget.transform.position, transform.position);
-            //if (currentTarget.unitSide == unitSide) break;
             if (distDiff <= minDistance)
             {
                 selectedTarget = currentTarget;
                 minDistance = distDiff;
             }
         }
-        //if (selectedTarget == null)
-        //{
-        //    selectedTarget = _towerToDestroy;
-        //    //agent.destination = selectedTarget.transform.position;
-        //}
+
     }
 }

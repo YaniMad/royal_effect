@@ -7,8 +7,7 @@ using UnityEngine.EventSystems;
 
 public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField]
-	private CardStats cardInfo;
+	public CardData cardData;
 	[SerializeField]
 	private Image icon;
 	[SerializeField]
@@ -20,10 +19,10 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 	[SerializeField]
 	private bool canDrag;
 
-	public CardStats CardInfo
+	public CardData CardInfo
 	{
-		get { return cardInfo; }
-		set { cardInfo = value; }
+		get { return cardData; }
+		set { cardData = value; }
 	}
 	public Image Icon 
 	{ 
@@ -57,12 +56,11 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		{
 			if(canDrag)
 			{
-				if (playerInfo.CheckIfEnoughRessource(cardInfo.Cost))
+				if (playerInfo.CheckIfEnoughRessource(cardData.cost))
                 {
 					playerInfo.OnDragging = true;
-					transform.SetParent(GameFunctions.GetCanvas());
+					transform.SetParent(GameManager.Instance.UICtrl.transform);
 				}
-
 			}
 		}
 	}
@@ -84,30 +82,36 @@ public class Card : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 		} else
         {
 			Debug.Log("NOT ENOUGH ELIXIR");
-
 		}
-
 		playerInfo.OnDragging = false;
 	}
 
 	private void SpawnUnit()
 	{
-		if(playerInfo.GetCurrentResources >= cardInfo.Cost)
+		if(playerInfo.GetCurrentResources >= cardData.cost)
 		{
-            playerInfo.PlayersDeck.RemoveHand(cardInfo.Index);
-			playerInfo.RemoveResources(CardInfo.Cost);
-			Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Debug.Log(cardInfo.Prefab.name);
-            GameFunctions.SpawnUnit(cardInfo.Prefab, playerInfo.UnitTransform, pos);
-            Destroy(gameObject);
+            playerInfo.PlayersDeck.RemoveHand(cardData);
+			playerInfo.RemoveResources(cardData.cost);
+			RaycastHit hit;
+			if (Physics.Raycast(Camera.main.transform.position, Camera.main.ScreenPointToRay(Input.mousePosition).direction, out hit, Mathf.Infinity))
+			{
+				Vector3 pos = hit.point;
+				GameManager.Instance.SpawnUnit(cardData.prefabToInstantiate, playerInfo.UnitTransform, pos);
+				Destroy(gameObject);
+			}
 		}
 	}
 
-	private void Update()
+	private void Start()
 	{
-		icon.sprite = cardInfo.Icon;
-		cardName.text = cardInfo.CardName;
-		cost.text = cardInfo.Cost.ToString();
+		SetCardContainerData();
+	}
+
+	public void SetCardContainerData()
+    {
+		icon.sprite = cardData.icon;
+		cardName.text = cardData.cardName;
+		cost.text = cardData.cost.ToString();
 	}
 
 }

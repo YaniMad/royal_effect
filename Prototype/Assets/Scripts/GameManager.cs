@@ -5,8 +5,11 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
+
     [SerializeField]
     private List<GameObject> objects;
+    public PlayerStats playerStats;
+    public UICtrl UICtrl;
 
     public static GameManager Instance
     {
@@ -29,5 +32,16 @@ public class GameManager : MonoBehaviour
     public static void AddObject(GameObject go)
     {
         Instance.Objects.Add(go);
+    }
+
+    public void SpawnUnit(GameObject _prefab, Transform _parent, Vector3 _pos)
+    {
+        GameObject _go = Instantiate(_prefab, _parent);
+        if (_go == null)
+        {
+            return;
+        }
+        _go.transform.position = _pos;
+        AddObject(_go);
     }
 }

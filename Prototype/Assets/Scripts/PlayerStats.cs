@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -69,11 +70,13 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         playersDeck.Start();
+        nextCard.cardData = playersDeck.NextCard;
+        nextCard.PlayerInfo = this;
     }
 
     private void Update()
     {
-        if(GetCurrentResources < GameConstants.RESOURCE_MAX + 1)
+        if (GetCurrentResources < GameConstants.RESOURCE_MAX + 1)
         {
             resources[GetCurrentResources].fillAmount = currentResources - GetCurrentResources;
             currentResources += Time.deltaTime * GameConstants.RESOURCE_SPEED;
@@ -93,15 +96,15 @@ public class PlayerStats : MonoBehaviour
     {
         if(playersDeck.Hand.Count < GameConstants.MAX_HAND_SIZE)
         {
-            CardStats cs = playersDeck.DrawCard();
+            CardData cs = playersDeck.DrawCard();
             GameObject go = Instantiate(cardPrefab, handParent);
             Card c = go.GetComponent<Card>();
             c.PlayerInfo = this;
-            c.CardInfo = cs;
+            c.cardData = cs;
         }
-
-        nextCard.CardInfo = playersDeck.NextCard;
+        nextCard.cardData = playersDeck.NextCard;
         nextCard.PlayerInfo = this;
+        nextCard.SetCardContainerData();
     }
 
     public void RemoveResources(int cost)

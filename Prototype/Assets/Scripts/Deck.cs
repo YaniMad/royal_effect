@@ -5,22 +5,19 @@ using UnityEngine;
 [System.Serializable]
 public class Deck 
 {
-    [SerializeField]
-	private List<CardStats> cards;
-    [SerializeField]
-    private List<CardStats> hand;
-    [SerializeField]
-    private CardStats nextCard;
+	public List<CardData> cards;
+    public List<CardData> hand;
+    public CardData nextCard;
 
-    public List<CardStats> Cards
+    public List<CardData> Cards
     {
         get { return cards; }
     }
-    public List<CardStats> Hand
+    public List<CardData> Hand
     {
         get { return hand; }
     }
-    public CardStats NextCard
+    public CardData NextCard
 	{
 		get { return nextCard; }
         set { nextCard = value; }
@@ -28,31 +25,22 @@ public class Deck
 
     public void Start()
     {
-        nextCard = cards[0];
+        nextCard = cards[Random.Range(0, cards.Count-1)];
     }
 
-    public CardStats DrawCard()
+    public CardData DrawCard()
     {
-        CardStats cs = nextCard;
-
+        CardData cs = nextCard;
         hand.Add(nextCard);
         cards.Remove(nextCard);
-        nextCard = cards[0];
-
+        nextCard = cards[Random.Range(0, cards.Count - 1)];
         return cs;
     }
 
-    public void RemoveHand(int index)
+    public void RemoveHand(CardData _card)
     {
-        foreach (CardStats cs in hand)
-        {
-            if(cs.Index == index)
-            {
-                hand.Remove(cs);
-                cards.Add(cs);
-                break;
-            }
-        }
+        hand.Remove(_card);
+        cards.Add(_card);
     }
 
 }
