@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 4376471704356703831}
   - component: {fileID: 1363293218394359537}
   m_Layer: 0
-  m_Name: GO_Card
+  m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
