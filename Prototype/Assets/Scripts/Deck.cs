@@ -23,18 +23,12 @@ public class Deck
         set { nextCard = value; }
 	}
 
-    public void Start()
-    {
-        nextCard = cards[Random.Range(0, cards.Count-1)];
-    }
-
     public CardData DrawCard()
     {
-        CardData cs = nextCard;
-        hand.Add(nextCard);
-        cards.Remove(nextCard);
-        nextCard = cards[Random.Range(0, cards.Count - 1)];
-        return cs;
+        CardData _card = cards[Random.Range(0, cards.Count - 1)]; ;
+        hand.Add(_card);
+        cards.Remove(_card);
+        return _card;
     }
 
     public void RemoveHand(CardData _card)

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private float currentResources;
     [SerializeField]
-    private GameObject cardPrefab;
+    private Card cardPrefab;
     [SerializeField]
     private Transform handParent;
     [SerializeField]
@@ -27,7 +28,12 @@ public class PlayerStats : MonoBehaviour
     private bool onDragging;
     [SerializeField]
     private Transform unitTransform;
-     
+    public Card currentGrabbedCard;
+
+    [Header("XR SETTINGS")]
+    [SerializeField] GameObject rightController;
+    [SerializeField] GameObject leftController;
+
     public Deck PlayersDeck
     {
         get { return playersDeck; }
@@ -69,21 +75,76 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        playersDeck.Start();
-        nextCard.cardData = playersDeck.NextCard;
+        nextCard.cardData = playersDeck.DrawCard();
         nextCard.PlayerInfo = this;
+        nextCard.SetCardContainerData();
+        for (int i = 0; i < GameConstants.MAX_HAND_SIZE; i++)
+        {
+            DrawCard(new Vector3(handParent.position.x + i, handParent.position.y, handParent.position.z));
+        }
     }
 
     private void Update()
     {
+        if (Input.GetButtonDown("XRI_Right_TriggerButton") || Input.GetButtonDown("XRI_Left_TriggerButton"))
+        {
+            GetCard();
+        }
+        if (Input.GetButtonUp("XRI_Right_TriggerButton") || Input.GetButtonUp("XRI_Left_TriggerButton"))
+        {
+            if (currentGrabbedCard == null) return;
+            UseCard();
+        }
+
         if (GetCurrentResources < GameConstants.RESOURCE_MAX + 1)
         {
             resources[GetCurrentResources].fillAmount = currentResources - GetCurrentResources;
             currentResources += Time.deltaTime * GameConstants.RESOURCE_SPEED;
         }
-
         UpdateText();
-        UpdateDeck();
+    }
+
+    private void GetCard()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit, Mathf.Infinity))
+        {
+            if (hit.transform.GetComponent<Card>() != null)
+            {
+                currentGrabbedCard = hit.transform.GetComponent<Card>();
+            }
+        }
+    }
+
+    private void UseCard()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit, Mathf.Infinity))
+        {
+            if (hit.transform.GetComponent<TriggerDetection>() != null)
+            {
+                currentGrabbedCard.PlayCard(hit.point);
+            }
+            else
+            {
+                ReleaseCard();
+            }
+        }
+        else
+        {
+            ReleaseCard();
+        }
+    }
+
+
+
+    public void ReleaseCard()
+    {
+        currentGrabbedCard.transform.DOMove(currentGrabbedCard.originalPosition, .5f);
+        currentGrabbedCard.transform.DORotateQuaternion(currentGrabbedCard.originalRotation, .5f).OnComplete(() =>
+        {
+            currentGrabbedCard.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        });
     }
 
     private void UpdateText()
@@ -92,19 +153,16 @@ public class PlayerStats : MonoBehaviour
         textMaxResources.text = (GameConstants.RESOURCE_MAX + 1).ToString();
     }
 
-    private void UpdateDeck()
+    public void DrawCard(Vector3 _pos)
     {
-        if(playersDeck.Hand.Count < GameConstants.MAX_HAND_SIZE)
-        {
-            CardData cs = playersDeck.DrawCard();
-            GameObject go = Instantiate(cardPrefab, handParent);
-            Card c = go.GetComponent<Card>();
-            c.PlayerInfo = this;
-            c.cardData = cs;
-        }
-        nextCard.cardData = playersDeck.NextCard;
-        nextCard.PlayerInfo = this;
-        nextCard.SetCardContainerData();
+        CardData _cardData = playersDeck.DrawCard();
+        Card _card = Instantiate(cardPrefab, handParent);
+        _card.PlayerInfo = this;
+        _card.cardData = _cardData;
+        _card.transform.position = _pos;
+        _card.SetCardContainerData();
+        _card.originalPosition = _pos;
+        _card.originalRotation = _card.transform.rotation;
     }
 
     public void RemoveResources(int cost)
