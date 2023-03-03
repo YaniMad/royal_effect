@@ -34,13 +34,14 @@ public class GameManager : MonoBehaviour
         Instance.Objects.Add(go);
     }
 
-    public void SpawnUnit(GameObject _prefab, Transform _parent, Vector3 _pos)
+    public void SpawnUnit(GameObject _prefab, Transform _parent, Vector3 _pos, CardData _data)
     {
         GameObject _go = Instantiate(_prefab, _parent);
         if (_go == null)
         {
             return;
         }
+        _go.GetComponentInChildren<CharacterManager>().cardData = _data;
         _go.transform.position = _pos;
         AddObject(_go);
     }

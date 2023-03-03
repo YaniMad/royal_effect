@@ -12,5 +12,5 @@ public class CardData : ScriptableObject
     public Sprite icon;
 
     [Header("UnitInfo")]
-    public int health;
+    public int maxHealth;
 }

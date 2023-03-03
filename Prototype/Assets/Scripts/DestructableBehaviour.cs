@@ -10,6 +10,7 @@ public class DestructableBehaviour : MonoBehaviour
         Ennemy = 1
     }
 
+    public CardData cardData;
     public UnitSide unitSide;
     public int _lifePoints;
     public float attackRange;
