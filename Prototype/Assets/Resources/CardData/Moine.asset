@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Moine
   cost: 2
-  prefabToInstantiate: {fileID: 1560478979101351846, guid: 03ce7e7da2ecb214e9914a0a6dd72996,
+  prefabToInstantiate: {fileID: 8380529495185805650, guid: 03ce7e7da2ecb214e9914a0a6dd72996,
     type: 3}
   icon: {fileID: 21300000, guid: de48a658df460db4da9bc5cb2f1eaa0f, type: 3}
   health: 0

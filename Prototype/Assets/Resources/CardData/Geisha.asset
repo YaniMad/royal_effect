@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Geisha
   cost: 2
-  prefabToInstantiate: {fileID: 3212402784664803653, guid: d0cf9c2f9925f3a4588cca82f7fe57b6,
+  prefabToInstantiate: {fileID: 8431417424172416880, guid: d0cf9c2f9925f3a4588cca82f7fe57b6,
     type: 3}
   icon: {fileID: 21300000, guid: be340a165cb9c8d4cb50f1deeb51d4ea, type: 3}
   health: 0

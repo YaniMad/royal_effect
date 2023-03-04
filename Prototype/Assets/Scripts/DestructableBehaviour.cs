@@ -18,7 +18,7 @@ public class DestructableBehaviour : MonoBehaviour
     public int _attackDamage;
 
     public DestructableBehaviour selectedTarget;
-
+    [SerializeField] private CharacterAnimation characterAnimation;
     [HideInInspector] public bool _isAttacking;
 
     public void Attack()
@@ -29,13 +29,13 @@ public class DestructableBehaviour : MonoBehaviour
             _isAttacking = true;
             transform.LookAt(selectedTarget.transform.position);
             currentCM._lifePoints -= _attackDamage;
-            GetComponent<CharacterAnimation>().animator.SetBool("onRange", true);
+            if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
             if (currentCM._lifePoints <= 0)
             {
                 Death();
-                GetComponent<CharacterAnimation>().animator.SetBool("onRange", false);
+                if (characterAnimation) characterAnimation.animator.SetBool("onRange", false);
             }
-            StartCoroutine(attackCooldown(GetComponent<CharacterAnimation>().animator.runtimeAnimatorController.animationClips[2].length));
+            if (characterAnimation) StartCoroutine(attackCooldown(characterAnimation.animator.runtimeAnimatorController.animationClips[2].length));
         }
 
         else if (currentCM == null)
@@ -44,13 +44,13 @@ public class DestructableBehaviour : MonoBehaviour
             TowerManager currentTM = selectedTarget.GetComponentInChildren<TowerManager>();
             _isAttacking = true;
             currentTM._lifePoints -= _attackDamage;
-            GetComponent<CharacterAnimation>().animator.SetBool("onRange", true);
+            if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
             if (currentTM._lifePoints <= 0)
             {
                 Death();
             }
         }
-        StartCoroutine(attackCooldown(GetComponent<CharacterAnimation>().animator.runtimeAnimatorController.animationClips[2].length));
+        if (characterAnimation) StartCoroutine(attackCooldown(characterAnimation.animator.runtimeAnimatorController.animationClips[2].length));
     }
 
     private IEnumerator attackCooldown(float _cooldown)

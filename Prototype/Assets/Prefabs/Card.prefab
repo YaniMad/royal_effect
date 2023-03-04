@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1625124459929422123}
   - component: {fileID: 1625124459929422120}
   m_Layer: 0
-  m_Name: Image (1)
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 8426639721983919708}
   - component: {fileID: 4376471704356703831}
   - component: {fileID: 1363293218394359537}
+  - component: {fileID: 3006991783844129637}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -132,7 +133,8 @@ MonoBehaviour:
   cost: {fileID: 1625124461183505931}
   playerStats: {fileID: 0}
   canDrag: 0
-  originalPosition: {x: 0, y: 0, z: 0}
+  rb: {fileID: 4376471704356703831}
+  col: {fileID: 8426639721983919708}
   isNextCard: 0
 --- !u!65 &8426639721983919708
 BoxCollider:
@@ -288,6 +290,23 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
+--- !u!114 &3006991783844129637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625124460190852866}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5bec37c6e06ade47a215bedfe5aa2f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vrouuuuuAmplitudes: {x: 0, y: 0, z: 0}
+  vrouuuuuDurations: {x: 0, y: 0, z: 0}
+  fleuteuteuAmplitudes: {x: 4, y: 10, z: 0}
+  fleuteuteuDurations: {x: 6, y: 3, z: 0}
+  card: {fileID: 1625124460190852988}
 --- !u!1 &1625124460210721578
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +573,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625124460633194105}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: -0.05}
   m_LocalScale: {x: 0.7, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -772,8 +791,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625124461761294120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0.009938704}
+  m_LocalScale: {x: 0.2, y: 0.20000002, z: 0.19999999}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1625124461183505928}
@@ -782,7 +801,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1.26, y: 1.72}
+  m_AnchoredPosition: {x: -1.2600002, y: 1.72}
   m_SizeDelta: {x: 16, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1625124461761294117
@@ -835,7 +854,7 @@ GameObject:
   - component: {fileID: 1625124461814355893}
   - component: {fileID: 1625124461814355898}
   m_Layer: 0
-  m_Name: Image
+  m_Name: UnitImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     [SerializeField]
-    private List<GameObject> objects;
+    private List<DestructableBehaviour> objects;
     public PlayerStats playerStats;
     public UICtrl UICtrl;
 
@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     {
         get { return instance; }
     }
-    public List<GameObject> Objects
+    public List<DestructableBehaviour> Objects
     {
         get { return objects; }
     }
@@ -25,22 +25,23 @@ public class GameManager : MonoBehaviour
         if(instance != this)
         {
             instance = this;
-            objects = new List<GameObject>();
+            objects = new List<DestructableBehaviour>();
         }
     }
 
-    public static void AddObject(GameObject go)
+    public static void AddObject(DestructableBehaviour go)
     {
         Instance.Objects.Add(go);
     }
 
-    public void SpawnUnit(GameObject _prefab, Transform _parent, Vector3 _pos)
+    public void SpawnUnit(DestructableBehaviour _prefab, Transform _parent, Vector3 _pos, DestructableBehaviour.UnitSide _unitSide = DestructableBehaviour.UnitSide.Ally)
     {
-        GameObject _go = Instantiate(_prefab, _parent);
+        DestructableBehaviour _go = Instantiate(_prefab, _parent);
         if (_go == null)
         {
             return;
         }
+        _go.unitSide = _unitSide;
         _go.transform.position = _pos;
         AddObject(_go);
     }

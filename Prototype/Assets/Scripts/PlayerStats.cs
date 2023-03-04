@@ -28,11 +28,12 @@ public class PlayerStats : MonoBehaviour
     private bool onDragging;
     [SerializeField]
     private Transform unitTransform;
+    public Transform cam;
     public Card currentGrabbedCard;
 
     [Header("XR SETTINGS")]
-    [SerializeField] GameObject rightController;
-    [SerializeField] GameObject leftController;
+    [SerializeField] public GameObject rightController;
+    [SerializeField] public GameObject leftController;
 
     public Deck PlayersDeck
     {
@@ -127,24 +128,15 @@ public class PlayerStats : MonoBehaviour
             }
             else
             {
-                ReleaseCard();
+                currentGrabbedCard.MoveToStartPosition();
+                currentGrabbedCard = null;
             }
         }
         else
         {
-            ReleaseCard();
+            currentGrabbedCard.MoveToStartPosition();
+            currentGrabbedCard = null;
         }
-    }
-
-
-
-    public void ReleaseCard()
-    {
-        currentGrabbedCard.transform.DOMove(currentGrabbedCard.originalPosition, .5f);
-        currentGrabbedCard.transform.DORotateQuaternion(currentGrabbedCard.originalRotation, .5f).OnComplete(() =>
-        {
-            currentGrabbedCard.transform.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        });
     }
 
     private void UpdateText()
@@ -161,8 +153,8 @@ public class PlayerStats : MonoBehaviour
         _card.cardData = _cardData;
         _card.transform.position = _pos;
         _card.SetCardContainerData();
-        _card.originalPosition = _pos;
-        _card.originalRotation = _card.transform.rotation;
+        _card.OriginalPosition = _pos;
+        _card.OriginalRotation = _card.transform.rotation;
     }
 
     public void RemoveResources(int cost)

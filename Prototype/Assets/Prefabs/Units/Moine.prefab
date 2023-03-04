@@ -524,6 +524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1560478979101351840}
+  - component: {fileID: 8380529495185805650}
   - component: {fileID: 1560478979101351847}
   m_Layer: 6
   m_Name: Moine
@@ -548,6 +549,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+--- !u!114 &8380529495185805650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560478979101351846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1cc7bcad76e61d44903a13efdf0fd93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitSide: 0
+  _lifePoints: 60
+  attackRange: 5
+  baseAttackRange: 5
+  _attackSpeed: 1.75
+  _attackDamage: 25
+  selectedTarget: {fileID: 0}
+  characterAnimation: {fileID: 1560478980365399980}
+  _isAttacking: 0
+  _manaCost: 0
 --- !u!195 &1560478979101351847
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2333,7 +2356,6 @@ GameObject:
   - component: {fileID: 1560478980365399971}
   - component: {fileID: 1560478980365399983}
   - component: {fileID: 1560478980365399982}
-  - component: {fileID: 1560478980365399981}
   - component: {fileID: 1560478980365399980}
   m_Layer: 0
   m_Name: Ally
@@ -2392,27 +2414,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1560478980365399981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1560478980365399970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1cc7bcad76e61d44903a13efdf0fd93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitSide: 0
-  _lifePoints: 60
-  attackRange: 5
-  baseAttackRange: 5
-  _attackSpeed: 1.75
-  _attackDamage: 25
-  selectedTarget: {fileID: 0}
-  _isAttacking: 0
-  _manaCost: 0
 --- !u!114 &1560478980365399980
 MonoBehaviour:
   m_ObjectHideFlags: 0

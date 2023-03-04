@@ -8,7 +8,7 @@ public class CardData : ScriptableObject
     [Header("CardInfo")]
     public string cardName;
     public int cost;
-    public GameObject prefabToInstantiate;
+    public DestructableBehaviour prefabToInstantiate;
     public Sprite icon;
 
     [Header("UnitInfo")]
