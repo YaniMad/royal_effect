@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8ea8f11ca804464d82a5f557d93793c, type: 3}
-  m_Name: Moine
+  m_Name: Tower
   m_EditorClassIdentifier: 
-  cardName: Moine
-  cost: 2
-  prefabToInstantiate: {fileID: 8380529495185805650, guid: 03ce7e7da2ecb214e9914a0a6dd72996,
-    type: 3}
-  icon: {fileID: 21300000, guid: de48a658df460db4da9bc5cb2f1eaa0f, type: 3}
-  maxHealth: 50
+  cardName: Tower
+  cost: 0
+  prefabToInstantiate: {fileID: 0}
+  icon: {fileID: 0}
+  maxHealth: 2500

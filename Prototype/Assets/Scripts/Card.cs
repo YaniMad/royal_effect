@@ -88,7 +88,7 @@ public class Card : MonoBehaviour
 		{
             playerStats.PlayersDeck.RemoveHand(cardData);
 			playerStats.RemoveResources(cardData.cost);
-			GameManager.Instance.SpawnUnit(cardData.prefabToInstantiate, playerStats.UnitTransform, _targetPosition);
+			GameManager.Instance.SpawnUnit(cardData.prefabToInstantiate, playerStats.UnitTransform, _targetPosition, cardData);
 		}
 	}
 
