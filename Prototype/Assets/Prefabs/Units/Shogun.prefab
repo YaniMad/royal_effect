@@ -159,15 +159,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1cc7bcad76e61d44903a13efdf0fd93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardData: {fileID: 11400000, guid: a6efa43b1b371904fa5f8b9b685b0ae7, type: 2}
+  unitSide: 0
   _lifePoints: 300
   attackRange: 0
+  baseAttackRange: 0
   _attackSpeed: 0.45
   _attackDamage: 400
   selectedTarget: {fileID: 0}
-  _manaCost: 0
-  _distDiff: 0
-  _tagToFollow: Ennemy
-  towerTag: EnnemyTower
+  characterAnimation: {fileID: 0}
+  _isAttacking: 0
+  navMeshAgent: {fileID: 1143917782558691256}
 --- !u!54 &-7381631935231047147
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -198,7 +200,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

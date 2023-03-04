@@ -19,12 +19,12 @@ public class DestructableBehaviour : MonoBehaviour
     public int _attackDamage;
 
     public DestructableBehaviour selectedTarget;
-    [SerializeField] private CharacterAnimation characterAnimation;
+    [SerializeField] public CharacterAnimation characterAnimation;
     [HideInInspector] public bool _isAttacking;
 
     public void Attack()
     {
-        CharacterManager currentCM = selectedTarget.GetComponentInChildren<CharacterManager>();
+        CharacterManager currentCM = selectedTarget.GetComponent<CharacterManager>();
         if(currentCM != null)
         {
             _isAttacking = true;
@@ -33,7 +33,7 @@ public class DestructableBehaviour : MonoBehaviour
             if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
             if (currentCM._lifePoints <= 0)
             {
-                Death();
+                currentCM.Death();
                 if (characterAnimation) characterAnimation.animator.SetBool("onRange", false);
             }
             if (characterAnimation) StartCoroutine(attackCooldown(characterAnimation.animator.runtimeAnimatorController.animationClips[2].length));
@@ -42,13 +42,13 @@ public class DestructableBehaviour : MonoBehaviour
         else if (currentCM == null)
         {
             attackRange = 10f;
-            TowerManager currentTM = selectedTarget.GetComponentInChildren<TowerManager>();
+            TowerManager currentTM = selectedTarget.GetComponent<TowerManager>();
             _isAttacking = true;
             currentTM._lifePoints -= _attackDamage;
             if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
             if (currentTM._lifePoints <= 0)
             {
-                Death();
+                currentTM.Death();
             }
         }
         if (characterAnimation) StartCoroutine(attackCooldown(characterAnimation.animator.runtimeAnimatorController.animationClips[2].length));
@@ -62,6 +62,11 @@ public class DestructableBehaviour : MonoBehaviour
 
     private void Death()
     {
-        Destroy(selectedTarget.transform.parent.gameObject);
+        if (GetComponent<CharacterManager>())
+        {
+            GameManager.Instance.objects.Remove(GetComponent<CharacterManager>()); 
+            Debug.Log("Delete from list");
+        }   
+        Destroy(gameObject);
     }
 }
