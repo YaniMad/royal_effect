@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
             //objects = FindObjectsOfType<CharacterManager>();
 
         }
+
+        UICtrl._endGameUI.SetActive(false);
     }
 
     private void Start()
@@ -60,5 +63,27 @@ public class GameManager : MonoBehaviour
         {
             _destructable.ReinitTarget();
         }
+    }
+
+    public void EndGame(TowerManager.UnitSide _unitSide)
+    {
+
+        UICtrl._endGameUI.SetActive(true);
+
+        UICtrl._endGameUI.transform.DOMoveY(15, 1)
+            .SetEase(Ease.InCubic)
+            .OnComplete(() => {
+                Time.timeScale = 0;
+            });
+
+        if (_unitSide == DestructableBehaviour.UnitSide.Ally)
+        {
+           UICtrl.winLooseText.text = "You Loose";
+        }
+        else
+        {
+            UICtrl.winLooseText.text = "You Win";
+        }
+        
     }
 }

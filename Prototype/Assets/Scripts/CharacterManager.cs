@@ -6,13 +6,23 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class CharacterManager : DestructableBehaviour
-{   
+{
+    public enum UnitType
+    {
+        Default = 0,
+        Physical = 1,
+        Distance = 2
+    }
+
     //Cible
     private List<DestructableBehaviour> _target = new List<DestructableBehaviour>();
     public NavMeshAgent navMeshAgent;
+    public UnitType unitType;
 
-    void Start()
+
+    public override void Start()
     {
+        base.Start();
         ReinitTarget();
     }
 
@@ -25,7 +35,7 @@ public class CharacterManager : DestructableBehaviour
             {
                 navMeshAgent.destination = transform.position;
                 Attack();
-            } else if (!_isAttacking && distDiff > attackRange)
+            } else if (!_isAttacking && distDiff > navMeshAgent.stoppingDistance)
             {
                 navMeshAgent.destination = selectedTarget.transform.position;
             }
