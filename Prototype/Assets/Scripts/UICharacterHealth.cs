@@ -8,23 +8,14 @@ public class UICharacterHealth : MonoBehaviour
     [SerializeField] private Image _healthBarImage;
 
     [SerializeField] private DestructableBehaviour _destructableBehaviour;
-    void Start()
-    {
-        _healthBarImage.fillAmount = 1;
-    }
 
-    void Update()
+    public void UpdateHealthBar()
     {
-        UpdateHealthBar();
-    }
-
-    private void UpdateHealthBar()
-    {
-        int currentHealth = _destructableBehaviour._lifePoints;
-        int maxHealth = _destructableBehaviour.cardData.maxHealth;
+        float currentHealth = _destructableBehaviour.currentHealth;
+        float maxHealth = _destructableBehaviour.cardData.maxHealth;
 
         //Debug.Log($"{currentHealth} et {maxHealth}");
 
-        _healthBarImage.fillAmount = (float)currentHealth / maxHealth;
+        _healthBarImage.fillAmount = currentHealth / maxHealth;
     }
 }

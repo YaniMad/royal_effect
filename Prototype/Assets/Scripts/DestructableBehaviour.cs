@@ -12,7 +12,7 @@ public class DestructableBehaviour : MonoBehaviour
 
     public CardData cardData;
     public UnitSide unitSide;
-    public int _lifePoints;
+    public int currentHealth;
     public float attackRange;
     public float baseAttackRange;
     public float _attackSpeed;
@@ -21,42 +21,43 @@ public class DestructableBehaviour : MonoBehaviour
     public DestructableBehaviour selectedTarget;
     [SerializeField] public CharacterAnimation characterAnimation;
     [HideInInspector] public bool _isAttacking;
+    public UICharacterHealth healthBar;
+
+    public virtual void Start()
+    {
+        currentHealth = cardData.maxHealth;
+        healthBar.UpdateHealthBar();
+    }
 
     public void Attack()
     {
         CharacterManager currentCM = selectedTarget.GetComponent<CharacterManager>();
         if(currentCM != null)
         {
-            _isAttacking = true;
-            transform.LookAt(selectedTarget.transform.position);
-            currentCM._lifePoints -= _attackDamage;
-            if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
-            if (currentCM._lifePoints <= 0)
-            {
-                currentCM.Death();
-                if (characterAnimation) characterAnimation.animator.SetBool("onRange", false);
-            }
-            if (characterAnimation) StartCoroutine(attackCooldown(characterAnimation.animator.runtimeAnimatorController.animationClips[2].length));
+            StartCoroutine(AttackRoutine(characterAnimation.animator.runtimeAnimatorController.animationClips[1].length));
         }
-
         else if (currentCM == null)
         {
-            attackRange = 10f;
             TowerManager currentTM = selectedTarget.GetComponent<TowerManager>();
             _isAttacking = true;
-            currentTM._lifePoints -= _attackDamage;
+            currentTM.currentHealth -= _attackDamage;
+            currentTM.healthBar.UpdateHealthBar();
             if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
-            if (currentTM._lifePoints <= 0)
+            if (currentTM.currentHealth <= 0)
             {
                 currentTM.Death();
             }
         }
-        if (characterAnimation) StartCoroutine(attackCooldown(characterAnimation.animator.runtimeAnimatorController.animationClips[2].length));
+        //if (characterAnimation) StartCoroutine(attack(characterAnimation.animator.runtimeAnimatorController.animationClips[1].length));
     }
 
-    private IEnumerator attackCooldown(float _cooldown)
+    private IEnumerator AttackRoutine(float _cooldown)
     {
-        yield return new WaitForSeconds(_cooldown); 
+        _isAttacking = true;
+        transform.LookAt(selectedTarget.transform.position);
+        if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
+        yield return new WaitForSeconds(_cooldown);
+        selectedTarget.TakeDamage(_attackDamage);
         _isAttacking = false;
     }
 
@@ -65,8 +66,17 @@ public class DestructableBehaviour : MonoBehaviour
         if (GetComponent<CharacterManager>())
         {
             GameManager.Instance.objects.Remove(GetComponent<CharacterManager>()); 
-            Debug.Log("Delete from list");
         }   
         Destroy(gameObject);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.UpdateHealthBar();
+        if (currentHealth <= 0)
+        {
+            Death();
+        }
     }
 }

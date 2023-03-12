@@ -16,4 +16,4 @@ MonoBehaviour:
   cost: 0
   prefabToInstantiate: {fileID: 0}
   icon: {fileID: 0}
-  maxHealth: 400
+  maxHealth: 2500
