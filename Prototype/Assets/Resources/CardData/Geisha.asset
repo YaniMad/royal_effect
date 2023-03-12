@@ -17,4 +17,4 @@ MonoBehaviour:
   prefabToInstantiate: {fileID: 8431417424172416880, guid: d0cf9c2f9925f3a4588cca82f7fe57b6,
     type: 3}
   icon: {fileID: 21300000, guid: be340a165cb9c8d4cb50f1deeb51d4ea, type: 3}
-  health: 0
+  maxHealth: 75

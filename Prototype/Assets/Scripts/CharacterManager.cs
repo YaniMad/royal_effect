@@ -11,8 +11,9 @@ public class CharacterManager : DestructableBehaviour
     private List<DestructableBehaviour> _target = new List<DestructableBehaviour>();
     public NavMeshAgent navMeshAgent;
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
         ReinitTarget();
     }
 
@@ -25,7 +26,7 @@ public class CharacterManager : DestructableBehaviour
             {
                 navMeshAgent.destination = transform.position;
                 Attack();
-            } else if (!_isAttacking && distDiff > attackRange)
+            } else if (!_isAttacking && distDiff > navMeshAgent.stoppingDistance)
             {
                 navMeshAgent.destination = selectedTarget.transform.position;
             }
