@@ -8,6 +8,13 @@ using DG.Tweening;
 
 public class PlayerStats : MonoBehaviour
 {
+    public enum ControllerSide
+    {
+        Default = 0,
+        Left = 1,
+        Right = 2
+    }
+
     [SerializeField]
     private Deck playersDeck;
     [SerializeField]
@@ -30,6 +37,7 @@ public class PlayerStats : MonoBehaviour
     private Transform unitTransform;
     public Transform cam;
     public Card currentGrabbedCard;
+    private ControllerSide grabbedCardSide = default;
 
     [Header("XR SETTINGS")]
     [SerializeField] public GameObject rightController;
@@ -87,14 +95,28 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButtonDown("XRI_Right_TriggerButton") || Input.GetButtonDown("XRI_Left_TriggerButton"))
-        {
-            GetCard();
+        if (Input.GetButtonDown("XRI_Right_TriggerButton")) {
+        
+            GetCard(ControllerSide.Right);
         }
-        if (Input.GetButtonUp("XRI_Right_TriggerButton") || Input.GetButtonUp("XRI_Left_TriggerButton"))
+
+        if (Input.GetButtonDown("XRI_Left_TriggerButton"))
+        {
+            GetCard(ControllerSide.Left);
+        }
+
+        if (Input.GetButtonUp("XRI_Right_TriggerButton")) {
+
+            if (currentGrabbedCard == null) return;
+            if (grabbedCardSide != ControllerSide.Right) return;
+            UseCard(ControllerSide.Right);
+        } 
+
+        if (Input.GetButtonUp("XRI_Left_TriggerButton"))
         {
             if (currentGrabbedCard == null) return;
-            UseCard();
+            if (grabbedCardSide != ControllerSide.Left) return;
+            UseCard(ControllerSide.Left);
         }
 
         if (GetCurrentResources < GameConstants.RESOURCE_MAX + 1)
@@ -105,26 +127,71 @@ public class PlayerStats : MonoBehaviour
         UpdateText();
     }
 
-    private void GetCard()
+    private void GetCard(ControllerSide _side)
     {
         RaycastHit hit;
-        if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit, Mathf.Infinity))
+        if (_side == ControllerSide.Left)
         {
-            if (hit.transform.GetComponent<Card>() != null)
+            if (Physics.Raycast(leftController.transform.position, leftController.transform.forward, out hit, Mathf.Infinity))
             {
-                currentGrabbedCard = hit.transform.GetComponent<Card>();
+                if (hit.transform.GetComponent<Card>() != null)
+                {
+                    if (currentGrabbedCard) currentGrabbedCard.MoveToStartPosition();
+                    currentGrabbedCard = hit.transform.GetComponent<Card>();
+                    grabbedCardSide = _side;
+                }
+            }
+        } else if (_side == ControllerSide.Right)
+        {
+            if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit, Mathf.Infinity))
+            {
+                if (hit.transform.GetComponent<Card>() != null)
+                {
+                    if (currentGrabbedCard) currentGrabbedCard.MoveToStartPosition();
+                    currentGrabbedCard = hit.transform.GetComponent<Card>();
+                    grabbedCardSide = _side;
+                }
             }
         }
     }
 
-    private void UseCard()
+    private void UseCard(ControllerSide _side)
     {
         RaycastHit hit;
-        if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit, Mathf.Infinity))
+        if (_side == ControllerSide.Left)
         {
-            if (hit.transform.GetComponent<TriggerDetection>() != null)
+            if (Physics.Raycast(leftController.transform.position, leftController.transform.forward, out hit, Mathf.Infinity))
             {
-                currentGrabbedCard.PlayCard(hit.point);
+                if (hit.transform.GetComponent<TriggerDetection>() != null)
+                {
+                    currentGrabbedCard.PlayCard(hit.point);
+                }
+                else
+                {
+                    currentGrabbedCard.MoveToStartPosition();
+                    currentGrabbedCard = null;
+                    grabbedCardSide = ControllerSide.Default;
+                }
+            }
+            else
+            {
+                currentGrabbedCard.MoveToStartPosition();
+                currentGrabbedCard = null;
+            }
+        } else if (_side == ControllerSide.Right)
+        {
+            if (Physics.Raycast(rightController.transform.position, rightController.transform.forward, out hit, Mathf.Infinity))
+            {
+                if (hit.transform.GetComponent<TriggerDetection>() != null)
+                {
+                    currentGrabbedCard.PlayCard(hit.point);
+                }
+                else
+                {
+                    currentGrabbedCard.MoveToStartPosition();
+                    currentGrabbedCard = null;
+                    grabbedCardSide = ControllerSide.Default;
+                }
             }
             else
             {
@@ -132,11 +199,7 @@ public class PlayerStats : MonoBehaviour
                 currentGrabbedCard = null;
             }
         }
-        else
-        {
-            currentGrabbedCard.MoveToStartPosition();
-            currentGrabbedCard = null;
-        }
+
     }
 
     private void UpdateText()
