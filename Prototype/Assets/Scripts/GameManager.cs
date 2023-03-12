@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour
     public PlayerStats playerStats;
     public UICtrl UICtrl;
 
-    public DestructableBehaviour _destructableBehaviour;
-
     public static GameManager Instance
     {
         get { return instance; }
