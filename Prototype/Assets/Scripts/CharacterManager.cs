@@ -6,10 +6,19 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class CharacterManager : DestructableBehaviour
-{   
+{
+    public enum UnitType
+    {
+        Default = 0,
+        Physical = 1,
+        Distance = 2
+    }
+
     //Cible
     private List<DestructableBehaviour> _target = new List<DestructableBehaviour>();
     public NavMeshAgent navMeshAgent;
+    public UnitType unitType;
+
 
     public override void Start()
     {

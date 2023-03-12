@@ -34,22 +34,10 @@ public class DestructableBehaviour : MonoBehaviour
         CharacterManager currentCM = selectedTarget.GetComponent<CharacterManager>();
         if(currentCM != null)
         {
-            _isAttacking = true;
-            transform.LookAt(selectedTarget.transform.position);
-            currentCM.currentHealth -= _attackDamage;
-            currentCM.healthBar.UpdateHealthBar();
-            if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
-            if (currentCM.currentHealth <= 0)
-            {
-                currentCM.Death();
-                if (characterAnimation) characterAnimation.animator.SetBool("onRange", false);
-            }
-            if (characterAnimation) StartCoroutine(attackCooldown(characterAnimation.animator.runtimeAnimatorController.animationClips[1].length));
+            StartCoroutine(AttackRoutine(characterAnimation.animator.runtimeAnimatorController.animationClips[1].length));
         }
         else if (currentCM == null)
         {
-            Debug.Log("TOWER ATTACK");
-            //attackRange = 10f;
             TowerManager currentTM = selectedTarget.GetComponent<TowerManager>();
             _isAttacking = true;
             currentTM.currentHealth -= _attackDamage;
@@ -60,12 +48,16 @@ public class DestructableBehaviour : MonoBehaviour
                 currentTM.Death();
             }
         }
-        if (characterAnimation) StartCoroutine(attackCooldown(characterAnimation.animator.runtimeAnimatorController.animationClips[1].length));
+        //if (characterAnimation) StartCoroutine(attack(characterAnimation.animator.runtimeAnimatorController.animationClips[1].length));
     }
 
-    private IEnumerator attackCooldown(float _cooldown)
+    private IEnumerator AttackRoutine(float _cooldown)
     {
-        yield return new WaitForSeconds(_cooldown); 
+        _isAttacking = true;
+        transform.LookAt(selectedTarget.transform.position);
+        if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
+        yield return new WaitForSeconds(_cooldown);
+        selectedTarget.TakeDamage(_attackDamage);
         _isAttacking = false;
     }
 
@@ -76,5 +68,15 @@ public class DestructableBehaviour : MonoBehaviour
             GameManager.Instance.objects.Remove(GetComponent<CharacterManager>()); 
         }   
         Destroy(gameObject);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        healthBar.UpdateHealthBar();
+        if (currentHealth <= 0)
+        {
+            Death();
+        }
     }
 }

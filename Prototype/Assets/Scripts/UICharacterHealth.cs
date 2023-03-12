@@ -9,11 +9,6 @@ public class UICharacterHealth : MonoBehaviour
 
     [SerializeField] private DestructableBehaviour _destructableBehaviour;
 
-    void Update()
-    {
-        //UpdateHealthBar();
-    }
-
     public void UpdateHealthBar()
     {
         float currentHealth = _destructableBehaviour.currentHealth;
