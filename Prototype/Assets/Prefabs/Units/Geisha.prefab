@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3212402784664803653
+--- !u!1 &2485841081842326300
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,13 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2508104512071298668}
-  - component: {fileID: 7851783721497620123}
-  - component: {fileID: 7172443591670514273}
-  - component: {fileID: 5814995781354439905}
-  - component: {fileID: 4712164514770417893}
-  - component: {fileID: 8431417424172416880}
-  - component: {fileID: 1877213644364375490}
+  - component: {fileID: 814305994266536161}
+  - component: {fileID: 2289788345259875969}
+  - component: {fileID: 3340812354105670504}
   m_Layer: 6
   m_Name: Geisha
   m_TagString: Untagged
@@ -22,37 +18,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2508104512071298668
+--- !u!4 &814305994266536161
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3212402784664803653}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 2485841081842326300}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 8175793264943155703}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Children: []
+  m_Father: {fileID: 2508104512071298668}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7851783721497620123
+--- !u!33 &2289788345259875969
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3212402784664803653}
+  m_GameObject: {fileID: 2485841081842326300}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7172443591670514273
+--- !u!23 &3340812354105670504
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3212402784664803653}
+  m_GameObject: {fileID: 2485841081842326300}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -88,20 +83,42 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5814995781354439905
-CapsuleCollider:
+--- !u!1 &3212402784664803653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2508104512071298668}
+  - component: {fileID: 4712164514770417893}
+  - component: {fileID: 8431417424172416880}
+  - component: {fileID: 1877213644364375490}
+  m_Layer: 6
+  m_Name: Geisha
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2508104512071298668
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3212402784664803653}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 8175793264943155703}
+  - {fileID: 814305994266536161}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4712164514770417893
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -140,6 +157,7 @@ MonoBehaviour:
   selectedTarget: {fileID: 0}
   characterAnimation: {fileID: 0}
   _isAttacking: 0
+  healthBar: {fileID: 7787225354088980897}
   navMeshAgent: {fileID: 1877213644364375490}
 --- !u!195 &1877213644364375490
 NavMeshAgent:
@@ -263,7 +281,7 @@ PrefabInstance:
     - target: {fileID: 5405270669538936085, guid: 0dabda25aa7112943822a00af23640f5,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.54
+      value: 2.41
       objectReference: {fileID: 0}
     - target: {fileID: 5405270669538936085, guid: 0dabda25aa7112943822a00af23640f5,
         type: 3}
@@ -287,6 +305,18 @@ PrefabInstance:
       objectReference: {fileID: 8431417424172416880}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dabda25aa7112943822a00af23640f5, type: 3}
+--- !u!114 &7787225354088980897 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6225357398830263619, guid: 0dabda25aa7112943822a00af23640f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 4212310003413093602}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97a0ab1a7ab34548a35c4d326452880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8175793264943155703 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5405270669538936085, guid: 0dabda25aa7112943822a00af23640f5,
