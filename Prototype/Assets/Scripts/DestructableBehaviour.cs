@@ -61,7 +61,7 @@ public class DestructableBehaviour : MonoBehaviour
         _isAttacking = false;
     }
 
-    private void Death()
+    public virtual void Death()
     {
         if (GetComponent<CharacterManager>())
         {

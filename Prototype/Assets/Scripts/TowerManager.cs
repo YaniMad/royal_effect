@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class TowerManager : DestructableBehaviour
 {
-    public override void Start()
+    
+    // Start is called before the first frame update
+    void Start()
     {
         
     }
@@ -12,5 +15,11 @@ public class TowerManager : DestructableBehaviour
     void Update()
     {
         
+    }
+
+    public override void Death()
+    {
+        base.Death();
+        GameManager.Instance.EndGame(unitSide);
     }
 }
