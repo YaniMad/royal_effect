@@ -39,14 +39,7 @@ public class DestructableBehaviour : MonoBehaviour
         else if (currentCM == null)
         {
             TowerManager currentTM = selectedTarget.GetComponent<TowerManager>();
-            _isAttacking = true;
-            currentTM.currentHealth -= _attackDamage;
-            currentTM.healthBar.UpdateHealthBar();
-            if (characterAnimation) characterAnimation.animator.SetBool("onRange", true);
-            if (currentTM.currentHealth <= 0)
-            {
-                currentTM.Death();
-            }
+            StartCoroutine(AttackRoutine(characterAnimation.animator.runtimeAnimatorController.animationClips[1].length));
         }
         //if (characterAnimation) StartCoroutine(attack(characterAnimation.animator.runtimeAnimatorController.animationClips[1].length));
     }
