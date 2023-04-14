@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
 
         if (_unitSide == DestructableBehaviour.UnitSide.Ally)
         {
-           UICtrl.winLooseText.text = "You Loose";
+           UICtrl.winLooseText.text = "You Lose";
         }
         else
         {
